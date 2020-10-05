@@ -1,14 +1,10 @@
 import { observable } from 'mobx';
 import DetailInfoModel from '../model/DetailInfoModel';
-import { DetailInfoStoreStates } from './@types';
+import { DetailInfoStoreTypes } from './@types/DetailInfoStore';
 
-const DetailInfoStore: DetailInfoStoreStates = observable({
-  transactionDetailInfo: [],
-  transactionCheckList: [],
+const DetailInfoStore: DetailInfoStoreTypes = observable({
   renderUserTransactionList: [],
   targetTransaction: {},
-  location: {},
-  pickup: {},
   pickupHtml: '',
   locationHtml: '',
 
@@ -34,15 +30,6 @@ const DetailInfoStore: DetailInfoStoreStates = observable({
         DetailInfoStore.targetTransaction = transaction;
       }
     });
-  },
-  async setAddressLocation() {
-    const location = await DetailInfoModel.getGeocoding(DetailInfoStore.targetTransaction.address.location.roadAddress);
-    DetailInfoStore.location = location;
-  },
-
-  async setAddressPickup() {
-    const pickup = await DetailInfoModel.getGeocoding(DetailInfoStore.targetTransaction.address.pickup.roadAddress);
-    DetailInfoStore.pickup = pickup;
   },
 
   setMapLocationHTML(locationHtml) {
